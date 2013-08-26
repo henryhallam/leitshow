@@ -20,7 +20,7 @@ Copyright 2013 Cosmogia
 
 // Configuration variables
 static bool GLOBAL_ADC_DEBUG_FLAG = false;
-static uint16_t GLOBAL_ACD_DMA_BUFFER[16];
+static uint16_t GLOBAL_ADC_DMA_BUFFER[16];
 
 // This is a structure of configuration settings for the DMA
 typedef struct {
@@ -159,7 +159,7 @@ static void adc_init(void) {
       DMA_STREAM0,                  // Assocated DMA Stream
       DMA_SxCR_CHSEL_0,             // DMA Channel Select
       (volatile uint32_t *) &ADC1_DR,                     // Pointer to ADC Data Register
-      (uint16_t *) &GLOBAL_ACD_DMA_BUFFER[0],        // Pointer to the DMA memory target
+      (uint16_t *) &GLOBAL_ADC_DMA_BUFFER[0],        // Pointer to the DMA memory target
       6                             //
     }
   };
@@ -201,8 +201,8 @@ void adc_poll() {
 
 
 void adc_get_dma_results(uint16_t results[2]) {
-  results[0] = GLOBAL_ACD_DMA_BUFFER[0];
-  results[1] = GLOBAL_ACD_DMA_BUFFER[1];
+  results[0] = GLOBAL_ADC_DMA_BUFFER[0];
+  results[1] = GLOBAL_ADC_DMA_BUFFER[1];
 }
 
 void adc_debug(void) {
@@ -210,26 +210,26 @@ void adc_debug(void) {
   adc_poll();
   _delay_ms(20);
   // eprintf("POT: %4i  Temp: %4i  Vref: %4i Vbat: %4i \n"
-  //        ,GLOBAL_ACD_DMA_BUFFER[0]
-  //        ,GLOBAL_ACD_DMA_BUFFER[1]
-  //        ,GLOBAL_ACD_DMA_BUFFER[2]
-  //        ,GLOBAL_ACD_DMA_BUFFER[3]);
+  //        ,GLOBAL_ADC_DMA_BUFFER[0]
+  //        ,GLOBAL_ADC_DMA_BUFFER[1]
+  //        ,GLOBAL_ADC_DMA_BUFFER[2]
+  //        ,GLOBAL_ADC_DMA_BUFFER[3]);
   eprintf("MAG_X_I: %4i |  MAG_Y_I: %4i |  MAG_Z_I: %4i |  Blank: %4i |  Temperature: %4i |  Vbat: %4i |  COND_I: %4i |  SENS_I: %4i |  VCC_5_I: %4i |  BAT_IRID_V_DIV: %4i |  BAT_CPU_V_DIV: %4i |  VCC_8_DIV: %4i |  ACS_I: %4i |\n",
-         GLOBAL_ACD_DMA_BUFFER[0],
-         GLOBAL_ACD_DMA_BUFFER[1],
-         GLOBAL_ACD_DMA_BUFFER[2],
-         GLOBAL_ACD_DMA_BUFFER[3],
-         GLOBAL_ACD_DMA_BUFFER[4],
-         GLOBAL_ACD_DMA_BUFFER[5],
-         GLOBAL_ACD_DMA_BUFFER[8],
-         GLOBAL_ACD_DMA_BUFFER[9],
-         GLOBAL_ACD_DMA_BUFFER[10],
-         GLOBAL_ACD_DMA_BUFFER[11],
-         GLOBAL_ACD_DMA_BUFFER[12],
-         GLOBAL_ACD_DMA_BUFFER[13],
-         GLOBAL_ACD_DMA_BUFFER[14]);
+         GLOBAL_ADC_DMA_BUFFER[0],
+         GLOBAL_ADC_DMA_BUFFER[1],
+         GLOBAL_ADC_DMA_BUFFER[2],
+         GLOBAL_ADC_DMA_BUFFER[3],
+         GLOBAL_ADC_DMA_BUFFER[4],
+         GLOBAL_ADC_DMA_BUFFER[5],
+         GLOBAL_ADC_DMA_BUFFER[8],
+         GLOBAL_ADC_DMA_BUFFER[9],
+         GLOBAL_ADC_DMA_BUFFER[10],
+         GLOBAL_ADC_DMA_BUFFER[11],
+         GLOBAL_ADC_DMA_BUFFER[12],
+         GLOBAL_ADC_DMA_BUFFER[13],
+         GLOBAL_ADC_DMA_BUFFER[14]);
   for (int i = 0; i < 15; i++) {
-    GLOBAL_ACD_DMA_BUFFER[i] = 0;
+    GLOBAL_ADC_DMA_BUFFER[i] = 0;
   }
 }
 
@@ -243,31 +243,31 @@ int adc_commandler(uint8_t len, const uint8_t data[],
   check_reply_space(*replen, 4);
   switch (data[0]) {
     case MAG_X_I:
-      respond(MAG_X_I, GLOBAL_ACD_DMA_BUFFER[MAG_X_I], replen, reply); break;
+      respond(MAG_X_I, GLOBAL_ADC_DMA_BUFFER[MAG_X_I], replen, reply); break;
     case MAG_Y_I:
-      respond(MAG_Y_I, GLOBAL_ACD_DMA_BUFFER[MAG_Y_I], replen, reply); break;
+      respond(MAG_Y_I, GLOBAL_ADC_DMA_BUFFER[MAG_Y_I], replen, reply); break;
     case MAG_Z_I:
-      respond(MAG_Z_I, GLOBAL_ACD_DMA_BUFFER[MAG_Z_I], replen, reply); break;
+      respond(MAG_Z_I, GLOBAL_ADC_DMA_BUFFER[MAG_Z_I], replen, reply); break;
     case Blank:
-      respond(Blank, GLOBAL_ACD_DMA_BUFFER[Blank], replen, reply); break;
+      respond(Blank, GLOBAL_ADC_DMA_BUFFER[Blank], replen, reply); break;
     case Temperature:
-      respond(Temperature, GLOBAL_ACD_DMA_BUFFER[Temperature], replen, reply); break;
+      respond(Temperature, GLOBAL_ADC_DMA_BUFFER[Temperature], replen, reply); break;
     case Vbat:
-      respond(Vbat, GLOBAL_ACD_DMA_BUFFER[Vbat], replen, reply); break;
+      respond(Vbat, GLOBAL_ADC_DMA_BUFFER[Vbat], replen, reply); break;
     case COND_I:
-      respond(COND_I, GLOBAL_ACD_DMA_BUFFER[COND_I], replen, reply); break;
+      respond(COND_I, GLOBAL_ADC_DMA_BUFFER[COND_I], replen, reply); break;
     case SENS_I:
-      respond(SENS_I, GLOBAL_ACD_DMA_BUFFER[SENS_I], replen, reply); break;
+      respond(SENS_I, GLOBAL_ADC_DMA_BUFFER[SENS_I], replen, reply); break;
     case VCC_5_I:
-      respond(VCC_5_I, GLOBAL_ACD_DMA_BUFFER[VCC_5_I], replen, reply); break;
+      respond(VCC_5_I, GLOBAL_ADC_DMA_BUFFER[VCC_5_I], replen, reply); break;
     case BAT_IRID_V_DIV:
-      respond(BAT_IRID_V_DIV, GLOBAL_ACD_DMA_BUFFER[BAT_IRID_V_DIV], replen, reply); break;
+      respond(BAT_IRID_V_DIV, GLOBAL_ADC_DMA_BUFFER[BAT_IRID_V_DIV], replen, reply); break;
     case BAT_CPU_V_DIV:
-      respond(BAT_CPU_V_DIV, GLOBAL_ACD_DMA_BUFFER[BAT_CPU_V_DIV], replen, reply); break;
+      respond(BAT_CPU_V_DIV, GLOBAL_ADC_DMA_BUFFER[BAT_CPU_V_DIV], replen, reply); break;
     case VCC_8_DIV:
-      respond(VCC_8_DIV, GLOBAL_ACD_DMA_BUFFER[VCC_8_DIV], replen, reply); break;
+      respond(VCC_8_DIV, GLOBAL_ADC_DMA_BUFFER[VCC_8_DIV], replen, reply); break;
     case ACS_I:
-      respond(ACS_I, GLOBAL_ACD_DMA_BUFFER[ACS_I], replen, reply); break;
+      respond(ACS_I, GLOBAL_ADC_DMA_BUFFER[ACS_I], replen, reply); break;
     default:
       *replen = 0;
       return NACK_UNKNOWN_COMMAND;
