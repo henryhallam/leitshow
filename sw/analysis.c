@@ -45,6 +45,12 @@
 /* Power values for each channel at the last timestep */
 float bins_old[NUM_CHANNELS] = {0};
 
+int mellow_mode = 0;
+
+void set_mellow_mode(int mellow) {
+    mellow_mode = mellow;
+}
+
 static inline void
 lpf_bins(float bins[NUM_CHANNELS]) {
   /* Low-pass filter each channel (set the performance with
@@ -164,8 +170,9 @@ analyze(float input[NUM_BANDS], float output[NUM_CHANNELS]) {
 
   const float total_bins = output[0] + output[1] + output[2] + output[3];
   if (total_bins > MIN_SPECTRUM_POWER) {
-    /* Make things more exciting */
-    /* diff_bins(output, gain_filter_states); */
+    /* Make things more exciting .. or not? */
+    if (mellow_mode)
+	diff_bins(output, gain_filter_states);
 
     /* Adaptive filter on gains */
     gain_adjust_bins(output, gain_filter_states, gains);

@@ -71,6 +71,14 @@ static void overflow(void) {
   }
 }
 
+static int sample_button(void) {
+    gpio_mode_setup(GPIOA, GPIO_MODE_INPUT, GPIO_PUPD_PULLDOWN, GPIO0);
+    _delay_us(1);
+    int x = gpio_get(GPIOA, GPIO0);
+    gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO0);
+    return x;
+}
+
 int main(void) {
 
   setup_peripherals();
@@ -83,6 +91,9 @@ int main(void) {
 
   volatile uint32_t load;
 
+  int button_sample_cnt = 0;
+  int button_hot = 0;
+
   while (1) {
     uint32_t ts = tick();
     adc_get_dma_results(adc);
@@ -92,6 +103,16 @@ int main(void) {
     set_all_chans(brt);
 
     load = tock_us(ts);
+
+    if (button_sample_cnt++ == 100) {
+      button_sample_cnt = 0;
+      if (sample_button())
+        button_hot++;
+      else
+        button_hot = 0;
+      if (button_hot > 10)
+        set_mellow_mode(1);
+    }
 
     if (load > PERIOD_US) overflow();
 
