@@ -14,8 +14,8 @@
 # What's the executable called?
 PROJ = main
 
-COMMON_DIR = /home/peddie/cosmogia/code/common
-OPENCM3_DIR = $(COMMON_DIR)/libopencm3/
+MKFILE_DIR = Makefile-template/
+OPENCM3_DIR = libopencm3/
 LDSCRIPT ?= stm32f4-discovery.ld
 DEP_PKG = python-yaml autoconf libusb-1.0-0-dev doxygen doxygen-latex
 
@@ -64,8 +64,6 @@ USERCLEAN ?=
 # What's the extension on C++ files?  .cc is the Google default, but
 # lots of people use .cpp instead.
 CXX_EXT = cc
-
-MKFILE_DIR = $(COMMON_DIR)/Makefile-template/
 
 NO_WERROR = 22
 

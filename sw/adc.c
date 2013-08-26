@@ -128,7 +128,7 @@ static void adc_dynamic_init(adc_configuration_t c) {
   // 8. Set the alignment of data
   adc_set_right_aligned(c.adc);
   // 9. Set the sample time
-  adc_set_sample_time_on_all_channels(c.adc, ADC_SMPR1_SMP_1DOT5CYC);
+  adc_set_sample_time_on_all_channels(c.adc, ADC_SMPR_SMP_3CYC);
   // 10. Fast conversion mode?
   // N/A
   // 11. Configure DMA

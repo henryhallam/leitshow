@@ -1,3 +1,9 @@
 [submodule "SparkFun-Eagle-Libraries"]
 	path = SparkFun-Eagle-Libraries
 	url = https://github.com/sparkfun/SparkFun-Eagle-Libraries.git
+[submodule "sw/Makefile-template"]
+	path = sw/Makefile-template
+	url = https://github.com/peddie/Makefile-template.git
+[submodule "sw/libopencm3"]
+	path = sw/libopencm3
+	url = https://github.com/libopencm3/libopencm3.git
